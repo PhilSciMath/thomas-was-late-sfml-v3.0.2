@@ -42,6 +42,9 @@ Engine::Engine() :
 
     // Load the texture for the background vertex array
     texture_tiles = TextureHolder::get_texture("graphics/tileset.png");
+
+    // Initialize the particle system
+    ps.init(1000);
 }
 
 

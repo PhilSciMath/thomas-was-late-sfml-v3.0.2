@@ -24,6 +24,10 @@ void Engine::draw() {
             m_window.draw(thomas.get_sprite()); // Thomas in background
             m_window.draw(bob.get_sprite());    // Bob focused
         }
+
+        // Draw the particle system
+        if (ps.running())
+            m_window.draw(ps);
     }
 
     // Handling the split screen mode
@@ -39,6 +43,8 @@ void Engine::draw() {
         m_window.draw(bob.get_sprite());     // Draw Bob first
         m_window.draw(thomas.get_sprite());  // Draw thomas
 
+        m_window.draw(ps); // Draw the particle system
+
         // Now drawing Bob's side of the screen
         m_window.setView(m_bg_right_view); // Switch to right background view
         m_window.draw(m_bg_sprite);        // Draw the sprite there
@@ -48,6 +54,8 @@ void Engine::draw() {
 
         m_window.draw(thomas.get_sprite());  // Draw Thomas first
         m_window.draw(bob.get_sprite());     // Then draw Bob
+
+        m_window.draw(ps); // Draw the particle system
     }
 
     // Handling the HUD

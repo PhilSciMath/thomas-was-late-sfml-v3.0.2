@@ -81,10 +81,15 @@ bool Engine::detect_collisions(PlayableCharacter& character) {
                     character.stop_falling(block.position.y);
                 else if (character.get_head().findIntersection(block))
                     character.stop_jump();
+            }
 
-                // More to come here once we deal with particle effects
-
-
+            // If the character's feet touch water or fire, start the
+            // particles effect, but only if the effect is not running
+            if (!ps.running()) {
+                if (array_level[y][x] == 2 || array_level[y][x] == 3) {
+                    if (character.get_feet().findIntersection(block))
+                        ps.emit_particles(character.get_center());
+                }
             }
 
             // Has the character reached the goal

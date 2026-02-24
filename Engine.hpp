@@ -7,12 +7,16 @@
 #include "LevelManager.hpp"
 #include "SoundManager.hpp"
 #include "Hud.hpp"
+#include "ParticleSystem.hpp"
 
 
 class Engine {
 private:
     // The only instance of texture holder class
     TextureHolder t_holder;
+
+    // Create a particle system
+    ParticleSystem ps;
 
     // Add Thomas and Bob characters
     Thomas thomas;

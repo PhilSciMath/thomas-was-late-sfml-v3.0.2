@@ -103,4 +103,8 @@ void Engine::update(float dt_as_seconds) {
         // Reset frames to next update
         frames_since_last_update = 0;
     }
+
+    // Update the particles
+    if (ps.running())
+        ps.update(dt_as_seconds);
 }
