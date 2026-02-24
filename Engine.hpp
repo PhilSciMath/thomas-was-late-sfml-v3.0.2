@@ -6,6 +6,7 @@
 #include "Bob.hpp"
 #include "LevelManager.hpp"
 #include "SoundManager.hpp"
+#include "Hud.hpp"
 
 
 class Engine {
@@ -22,6 +23,11 @@ private:
 
     // Create a sound manager object
     SoundManager sm;
+
+    // Hud
+    Hud hud;
+    int frames_since_last_update = 0;
+    const unsigned target_frames_per_hud_update = 500;
 
     // Each tile is a square 50x50
     const int TILE_SIZE = 50;

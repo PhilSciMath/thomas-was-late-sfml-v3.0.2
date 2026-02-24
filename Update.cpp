@@ -78,4 +78,29 @@ void Engine::update(float dt_as_seconds) {
         else
             m_main_view.setCenter(bob.get_center());
     }
+
+    // Time to update the HUD?
+    // Increment number of frames since last HUD update
+    frames_since_last_update++;
+
+    // Update the HUD every target_frames_per_hud_upadte frames
+    if (frames_since_last_update > target_frames_per_hud_update) {
+
+        // Update game HUD text
+        std::stringstream ss_time;
+        std::stringstream ss_level;
+
+        // Update the time text
+        ss_time << static_cast<int>(m_time_left);
+        hud.set_time_text(ss_time.str());
+
+        // Update the level text
+        ss_level.str("");   // This line
+        ss_level.clear();   // And this one together fixed a problem
+        ss_level << "Level: " << lm.get_current_level();
+        hud.set_level_text(ss_level.str());
+
+        // Reset frames to next update
+        frames_since_last_update = 0;
+    }
 }

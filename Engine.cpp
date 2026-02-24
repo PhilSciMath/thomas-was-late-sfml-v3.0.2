@@ -9,15 +9,24 @@ Engine::Engine() :
     m_bg_sprite(t_holder.get_texture("graphics/bg.png"))
 {
     // Get screen resolution
-    sf::Vector2u resolution = sf::VideoMode::getDesktopMode().size;
+    sf::Vector2f resolution;
+    unsigned mode_x = sf::VideoMode::getDesktopMode().size.x;
+    unsigned mode_y = sf::VideoMode::getDesktopMode().size.y;
+    resolution.x = static_cast<float>(mode_x);
+    resolution.y = static_cast<float>(mode_y);
 
     // Create a window object with appropriate resolution, title and state
-    m_window.create(sf::VideoMode(resolution), "Thomas was Late",
+    m_window.create(sf::VideoMode({mode_x, mode_y}), "Thomas was Late",
         sf::State::Fullscreen);
 
     // Setting up the full screen view
-    m_main_view.setSize({(float) resolution.x, (float) resolution.y});
-    m_hud_view.setViewport(sf::FloatRect({0.f, 0.f},{1.f, 1.f})); // ?????
+    m_main_view.setSize(resolution);
+    m_bg_main_view.setSize(resolution);
+    m_bg_main_view.setCenter(resolution / 2.0f);
+
+    m_hud_view.setSize(resolution);
+    m_hud_view.setCenter(resolution / 2.0f);
+    m_hud_view.setViewport(sf::FloatRect({0.0f, 0.0f},{1.0f, 1.0f}));
 
     // Now the split screen views
     m_left_view.setViewport(

@@ -51,9 +51,11 @@ void Engine::draw() {
     }
 
     // Handling the HUD
-    m_window.setView(m_hud_view); // Switch to HUD view
-
-
+    m_window.setView(m_hud_view);
+    m_window.draw(hud.get_level_text()); // Draw the level number
+    m_window.draw(hud.get_time_text());  // Draw time left
+    if (!m_game_is_playing)
+        m_window.draw(hud.get_message()); // Draw "Press Enter" message
 
     // Show everything drawn
     m_window.display();
