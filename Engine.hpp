@@ -61,6 +61,9 @@ private:
     // Sprite background (texture set in the constructor using t_holder)
     sf::Sprite m_bg_sprite;
 
+    // Declare a shader for the background
+    sf::Shader ripple_shader;
+
     // State of the game: playing or not playing
     bool m_game_is_playing = false;
 

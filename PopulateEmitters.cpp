@@ -7,8 +7,10 @@ void Engine::populate_emitters(std::vector<sf::Vector2f>& sound_emitters,
                                int** array_level)
 {
     // Make sure the vector is empty
-    if (!sound_emitters.empty())
-        std::cout << "Error! Vector sound_emitters is not empty.\n";
+    if (!sound_emitters.empty()) {
+        sound_emitters.clear();
+        sound_emitters.shrink_to_fit();
+    }
 
     // Keep track of the previous emitter so we don't make too many
     sf::FloatRect previous_emitter;

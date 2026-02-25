@@ -6,11 +6,17 @@ void Engine::draw() {
     // Clean the last frame painting the screen white
     m_window.clear(sf::Color::White);
 
+    // Update the shader parameters
+    ripple_shader.setUniform("uTime", m_total_game_time.asSeconds());
+
     // Handling the full screen mode
     if (!m_screen_is_split) {
 
         m_window.setView(m_bg_main_view); // Switch to background view
-        m_window.draw(m_bg_sprite);       // Then draw the background
+
+        // Draw the background with shader effect
+        m_window.draw(m_bg_sprite, &ripple_shader);
+
         m_window.setView(m_main_view);    // Switch back to the main view
 
         m_window.draw(va_level, &texture_tiles); // Draw the level
@@ -33,21 +39,29 @@ void Engine::draw() {
     // Handling the split screen mode
     else {
 
-        // Drawing first Thomas' side of the screen
+        // Left side
         m_window.setView(m_bg_left_view); // Switch to left background view
-        m_window.draw(m_bg_sprite);       // Draw the background there
-        m_window.setView(m_left_view);    // Then Switch to left view
+
+        // Draw background with shader effect
+        m_window.draw(m_bg_sprite, &ripple_shader);
+
+        m_window.setView(m_left_view);    // Then Switch to left main view
 
         m_window.draw(va_level, &texture_tiles); // Draw the level
 
         m_window.draw(bob.get_sprite());     // Draw Bob first
         m_window.draw(thomas.get_sprite());  // Draw thomas
 
-        m_window.draw(ps); // Draw the particle system
+        // Draw  the particle system
+        if (ps.running())
+            m_window.draw(ps);
 
-        // Now drawing Bob's side of the screen
+        // Right side
         m_window.setView(m_bg_right_view); // Switch to right background view
-        m_window.draw(m_bg_sprite);        // Draw the sprite there
+
+        // Draw background with shader effect
+        m_window.draw(m_bg_sprite, &ripple_shader);
+
         m_window.setView(m_right_view);    // Then switch to the right view
 
         m_window.draw(va_level, &texture_tiles); // Draw the level
@@ -55,7 +69,9 @@ void Engine::draw() {
         m_window.draw(thomas.get_sprite());  // Draw Thomas first
         m_window.draw(bob.get_sprite());     // Then draw Bob
 
-        m_window.draw(ps); // Draw the particle system
+        // Draw the particle system
+        if (ps.running())
+            m_window.draw(ps);
     }
 
     // Handling the HUD

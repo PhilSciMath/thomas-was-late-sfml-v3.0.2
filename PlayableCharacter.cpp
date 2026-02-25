@@ -55,15 +55,15 @@ void PlayableCharacter::update(float elapsed_time) {
     sf::FloatRect rect = get_position();
 
     // Feet
-    feet.position.x = rect.position.x + 3;
+    feet.position.x = rect.position.x + 5;
     feet.position.y = rect.position.y + rect.size.y - 1;
-    feet.size.x = rect.size.x - 6;
+    feet.size.x = rect.size.x - 10;
     feet.size.y = 1;
 
     // Head
-    head.position.x = rect.position.x;
+    head.position.x = rect.position.x + 10;
     head.position.y = rect.position.y + (rect.size.y * .3f);
-    head.size.x = rect.size.x;
+    head.size.x = rect.size.x - 20;
     head.size.y = 1;
 
     // Right

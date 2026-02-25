@@ -1,9 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "TextureHolder.hpp"
 #include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
-#include <sstream>
 #include <fstream>
 #include "LevelManager.hpp"
 
@@ -28,28 +26,35 @@ int** LevelManager::next_level(sf::VertexArray& r_va_level) {
         case 1: {
             level_to_load = "levels/level1.txt";
             start_position = {100, 100};
-            base_time_limit = 30.0f;
+            base_time_limit = 20.0f;
             break;
         }
 
         case 2: {
             level_to_load = "levels/level2.txt";
             start_position = {100, 3600};
-            base_time_limit = 100.0f;
+            base_time_limit = 50.0f;
             break;
         }
 
         case 3: {
             level_to_load = "levels/level3.txt";
-            start_position = {1250, 0};
-            base_time_limit = 30.0f;
+            start_position = {50, 300};
+            base_time_limit = 50.0f;
             break;
         }
 
         case 4: {
             level_to_load = "levels/level4.txt";
             start_position = {50, 200};
-            base_time_limit = 50.0f;
+            base_time_limit = 30.0f;
+            break;
+        }
+
+        case 5: {
+            level_to_load = "levels/level5.txt";
+            start_position = {50, 100};
+            base_time_limit = 200.0f;
             break;
         }
     } // End switch
@@ -57,10 +62,19 @@ int** LevelManager::next_level(sf::VertexArray& r_va_level) {
     // Computing how many tiles we need to the new level
     std::ifstream input_file(level_to_load); // Open the text file
     std::string s;
+    bool width_set = false;
 
-    while (getline(input_file, s))
+    while (getline(input_file, s)) {
+        if (s.empty()) continue;    // Ignores any possible blank line
+
+        // Set width of the level with the length of the first nonempty line s
+        if (!width_set) {
+            level_size.x = s.length();
+            width_set = true;
+        }
+
         ++level_size.y;             // Increase vertical number of tiles
-    level_size.x = s.length();      // Increase horizontal number of tiles
+    }
 
     // Returning to the start of the file so we can read it again line by line
     input_file.clear();

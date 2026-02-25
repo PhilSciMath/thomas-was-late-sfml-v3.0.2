@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <iostream>
 
 
 // Engine has a sprite member, which doesn't have a default constructor
@@ -45,6 +46,18 @@ Engine::Engine() :
 
     // Initialize the particle system
     ps.init(1000);
+
+    // Can this GPU use shaders?
+    if (!sf::Shader::isAvailable()) {
+        // Time to get a new PC, let's close the game
+        m_window.close();
+    }
+    else {
+        // Load two shaders (1 vertex, 1 fragment)
+        if (!ripple_shader.loadFromFile("shaders/vertShader.vert",
+            "shaders/rippleShader.frag"))
+            std::cout << "Error. No shader files loaded!\n";
+    }
 }
 
 
